@@ -65,9 +65,9 @@ palette = robots_are_cool
 
 canvas.begin_updates()
 
-canvas.set_size(height, width)
+canvas.set_size(width, height)
 canvas.set_fill_color(*random.choice(palette))
-canvas.fill_rect(0,0,width, height)
+canvas.fill_rect(0, 0, width, height)
 
 for x in range(100):
 	r, g, b = random.choice(palette)
