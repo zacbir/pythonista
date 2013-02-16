@@ -1,91 +1,111 @@
-size(2048, 2048)
+import canvas
+import random
+import math
 
-fill(0,0,0,1)
-rect(0,0,2048,2048)
+random.seed()
+
+circle_size = 96.0
+step = math.sqrt(circle_size**2 - (circle_size / 2.0)**2)
+
+def gen_color(r, g, b):
+	return (r/255.0, g/255.0, b/255.0)
 
 # palettes via Kuler: http://kuler.adobe.com/
     
-def gen_color(r, g, b):
-    return (r/255.0, g/255.0, b/255.0)
-
 mucha_winter = (
-    gen_color(242.0, 212.0, 155.0),
-    gen_color(242.0, 178.0, 102.0),
-    gen_color(191.0, 111.0, 65.0),
-    gen_color(89.0, 18.0, 2.0),
-    gen_color(55.0, 69.0, 65.0),    
+    gen_color(242, 212, 155),
+    gen_color(242, 178, 102),
+    gen_color(191, 111, 65),
+    gen_color(89, 18, 2),
+    gen_color(55, 69, 65),    
 )
 
 mabelis = (
-    gen_color(88.0, 0.0, 34.0),
-    gen_color(170.0, 44.0, 48.0),
-    gen_color(255.0, 190.0, 141.0),
-    gen_color(72.0, 123.0, 127.0),
-    gen_color(1.0, 29.0, 36.0),
+    gen_color(88, 0, 34),
+    gen_color(170, 44, 48),
+    gen_color(255, 190, 141),
+    gen_color(72, 123, 127),
+    gen_color(1, 29, 36),
 )
 
 full_of_life = (
-    gen_color(2.0, 115.0, 115.0),
-    gen_color(3.0, 140.0, 127.0),
-    gen_color(217.0, 179.0, 67.0),
-    gen_color(242.0, 140.0, 58.0),
-    gen_color(191.0, 63.0, 52.0),
+    gen_color(2, 115, 115),
+    gen_color(3, 140, 127),
+    gen_color(217, 179, 67),
+    gen_color(242, 140, 58),
+    gen_color(191, 63, 52),
 )
 
 let_the_rays_fall_on_the_earth = (
-    gen_color(64.0, 39.0, 104.0),
-    gen_color(127.0, 83.0, 112.0),
-    gen_color(191.0, 117.0, 96.0),
-    gen_color(229.0, 141.0, 0.0),
-    gen_color(255.0, 183.0, 0.0),
+    gen_color(64, 39, 104),
+    gen_color(127, 83, 112),
+    gen_color(191, 117, 96),
+    gen_color(229, 141, 0),
+    gen_color(255, 183, 0),
 )
 
 robots_are_cool = (
-    gen_color(30.0, 58.0, 64.0),
-    gen_color(104.0, 140.0, 140.0),
-    gen_color(217.0, 209.0, 186.0),
-    gen_color(242.0, 209.0, 148.0),
-    gen_color(242.0, 160.0, 87.0),
+    gen_color(30, 58, 64),
+    gen_color(104, 140, 140),
+    gen_color(217, 209, 186),
+    gen_color(242, 209, 148),
+    gen_color(242, 160, 87),
 )
 
-palette = mucha_winter
+palette = robots_are_cool
+
+canvas.begin_updates()
+
+canvas.set_size(2048, 2048)
+#canvas.set_fill_color(*random.choice(palette))
+canvas.set_fill_color(*gen_color(25, 5, 45))
+canvas.fill_rect(0,0,2048,2048)
 
 for x in range(100):
-    r, g, b = choice(palette)
-    fill(r, g, b, random() * 0.5 + 0.25)
-    csize = random() * 256 + 128
-    oval(random() * 2048, random() * 2048, csize, csize)
+	r, g, b = random.choice(palette)
+	canvas.set_fill_color(r, g, b, random.random() * 0.5 + 0.25)
+	csize = random.random() * 256 + 128
+	canvas.fill_ellipse(random.random() * 2048, random.random() * 2048, csize, csize)
 
 def rstrokedline(start_x, start_y, end_x, end_y):
-    stroke(1, 1, 1, random() * 0.25 + 0.05)
-    line(start_x, start_y, end_x, end_y)
+	canvas.set_line_width(random.random() * 0.75 + 0.25)
+	canvas.set_stroke_color(1, 1, 1, random.random() * 0.25 + 0.05)
+	canvas.draw_line(start_x, start_y, end_x, end_y)
 
 def hexacircle(start_x, start_y):
-    r, g, b = choice(palette)
+	r, g, b = random.choice(palette)
 
-    nofill()
-    stroke(1,1,1, random() * 0.15)
-    star(start_x, start_y, 6, 32, 32 * 1.155)
-    fill(r, g, b, random() * 0.75 + 0.25)
-    stroke(1,1,1, random() * 0.50 + 0.50)
-    oval(start_x - 32, start_y - 32, 64, 64)
+	canvas.set_fill_color(r, g, b, random.random() * 0.75 + 0.25)
+	canvas.set_stroke_color(1, 1, 1, random.random() * 0.50 + 0.50)
+	canvas.set_line_width(random.random() * 0.75 + 0.25)
+	canvas.draw_ellipse(start_x - (0.5 * circle_size), start_y - (0.5 * circle_size), circle_size, circle_size)
+	canvas.fill_ellipse(start_x - (0.5 * circle_size), start_y - (0.5 * circle_size), circle_size, circle_size)
 
-    # draw lines
-    rstrokedline(start_x, start_y - 64, start_x, start_y + 64)
-    rstrokedline(start_x - 64, start_y - 36, start_x + 64, start_y + 36)
-    rstrokedline(start_x - 64, start_y + 36, start_x + 64, start_y - 36)
+	# draw lines
+	rstrokedline(start_x, start_y - circle_size, start_x, start_y + circle_size)
+	rstrokedline(start_x - step, start_y, start_x + step, start_y)
 
-    rstrokedline(start_x - 114, start_y + 197, start_x + 114, start_y - 195)
-    rstrokedline(start_x - 114, start_y - 195, start_x + 114, start_y + 197)
-    rstrokedline(start_x - 64, start_y, start_x + 64, start_y)
+	rstrokedline(start_x - step, start_y - (0.5 * circle_size), start_x + step, start_y + (0.5 * circle_size))
+	rstrokedline(start_x - step, start_y + (0.5 * circle_size), start_x + step, start_y - (0.5 * circle_size))
 
-for x in range(19): # 19 for full-width
-    for y in range(32): # 32 for full-height
-        center_x = x * 112
-        center_y = y * 64
-        hexacircle(center_x, center_y)
-        hexacircle(center_x + 56, center_y + 32)
+	rstrokedline(start_x - step, start_y + (1.5 * circle_size), start_x + step, start_y - (1.5 * circle_size))
+	rstrokedline(start_x - step, start_y - (1.5 * circle_size), start_x + step, start_y + (1.5 * circle_size))
+    
+	rstrokedline(start_x - step, start_y + (2.5 * circle_size), start_x + step, start_y - (2.5 * circle_size))
+	rstrokedline(start_x - step, start_y - (2.5 * circle_size), start_x + step, start_y + (2.5 * circle_size))
+    
+	rstrokedline(start_x - (3.0 * step), start_y + (0.5 * circle_size), start_x + (3.0 * step), start_y - (0.5 * circle_size))
+	rstrokedline(start_x - (3.0 * step), start_y - (0.5 * circle_size), start_x + (3.0 * step), start_y + (0.5 * circle_size))
+
+for x in xrange(40): # 20 for full-width
+	for y in xrange(66): # 33 for full-height
+		center_x = x * (2.0 * step)
+		center_y = y * circle_size
+		hexacircle(center_x, center_y)
+		hexacircle(center_x + step, center_y + (0.5 * circle_size))
 
 # Mute with a 15% black overlay
-fill(0,0,0,0.15)
-rect(0,0,2048,2048)
+canvas.set_fill_color(0,0,0,0.15)
+canvas.draw_rect(0,0,2048,2048)
+
+canvas.end_updates()
