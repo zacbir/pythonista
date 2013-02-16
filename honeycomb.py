@@ -4,7 +4,9 @@ import math
 
 random.seed()
 
-circle_size = 96.0
+width = 2048.0
+height = 2048.0
+circle_size = 192.0
 step = math.sqrt(circle_size**2 - (circle_size / 2.0)**2)
 
 def gen_color(r, g, b):
@@ -56,16 +58,15 @@ palette = robots_are_cool
 
 canvas.begin_updates()
 
-canvas.set_size(2048, 2048)
-#canvas.set_fill_color(*random.choice(palette))
-canvas.set_fill_color(*gen_color(25, 5, 45))
-canvas.fill_rect(0,0,2048,2048)
+canvas.set_size(height, width)
+canvas.set_fill_color(*random.choice(palette))
+canvas.fill_rect(0,0,width, height)
 
 for x in range(100):
 	r, g, b = random.choice(palette)
 	canvas.set_fill_color(r, g, b, random.random() * 0.5 + 0.25)
-	csize = random.random() * 256 + 128
-	canvas.fill_ellipse(random.random() * 2048, random.random() * 2048, csize, csize)
+	csize = random.random() * (width / 8.0) + (width / 16.0)
+	canvas.fill_ellipse(random.random() * width, random.random() * height, csize, csize)
 
 def rstrokedline(start_x, start_y, end_x, end_y):
 	canvas.set_line_width(random.random() * 0.75 + 0.25)
@@ -97,8 +98,8 @@ def hexacircle(start_x, start_y):
 	rstrokedline(start_x - (3.0 * step), start_y + (0.5 * circle_size), start_x + (3.0 * step), start_y - (0.5 * circle_size))
 	rstrokedline(start_x - (3.0 * step), start_y - (0.5 * circle_size), start_x + (3.0 * step), start_y + (0.5 * circle_size))
 
-for x in xrange(40): # 20 for full-width
-	for y in xrange(66): # 33 for full-height
+for x in xrange(int(math.ceil(width/circle_size))+1):
+	for y in xrange(int(math.ceil(height/circle_size))+1):
 		center_x = x * (2.0 * step)
 		center_y = y * circle_size
 		hexacircle(center_x, center_y)
@@ -106,6 +107,6 @@ for x in xrange(40): # 20 for full-width
 
 # Mute with a 15% black overlay
 canvas.set_fill_color(0,0,0,0.15)
-canvas.draw_rect(0,0,2048,2048)
+canvas.draw_rect(0,0,width,height)
 
 canvas.end_updates()
