@@ -4,8 +4,15 @@ import math
 
 random.seed()
 
-width = 2048.0
-height = 2048.0
+# common devices
+ipad = (1024.0, 1024.0)
+ipad_r = (2048.0, 2048.0)
+iphone = (320.0, 480.0)
+iphone_r = (640.0, 960.0)
+iphone_5 = (640.0, 1136.0)
+mbp_r = (2880.0, 1800.0) # too big for Pythonista
+
+width, height = ipad_r
 circle_size = 192.0
 step = math.sqrt(circle_size**2 - (circle_size / 2.0)**2)
 
