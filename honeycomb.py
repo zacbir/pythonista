@@ -2,12 +2,12 @@ import canvas
 import random
 import math
 
-from urbanape import common_devices
+from devices import *
 from kuler import *
 
 random.seed()
 
-width, height = common_devices['ipad_r']
+width, height = ipad_r
 circle_size = 192.0
 step = math.sqrt(circle_size**2 - (circle_size / 2.0)**2)
 
