@@ -1,4 +1,10 @@
+import random
+
 from canvas import *
+
+def shade_of(color):
+	r, g, b = color
+	return r, g, b, random.random() * 0.25 + 0.25
 
 def gen_color(r, g, b):
     return (r/255.0, g/255.0, b/255.0)
@@ -89,11 +95,12 @@ def draw_block(x, y, theme):
 
 themes = (mucha_winter, mabelis, full_of_life, let_the_rays_fall_on_the_earth, robots_are_cool)
 
-set_size(1024.0, 1024.0)
+if __name__ == 'main':
+	set_size(1024.0, 1024.0)
 
-start_x = 10.0
-start_y = 10.0
+	start_x = 10.0
+	start_y = 10.0
 
-for theme in themes:
-    draw_block(start_x, start_y, theme)
-    start_y += 60.0
+	for theme in themes:
+	    draw_block(start_x, start_y, theme)
+	    start_y += 60.0
